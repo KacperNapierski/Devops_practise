@@ -1,0 +1,72 @@
+body{
+    background-color: black;
+  }
+  
+  #landpage{
+    background: url('http://source.unsplash.com/EG49vTtKdvI/1600x900') no-repeat center center fixed;
+    width: 100vw;
+  }
+  
+  #thumbnailgroup{
+    padding-bottom: 3vh;
+  }
+  
+  
+  h1{
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight:300;
+    font-size:11vw;
+    text-align:center;
+    margin: auto auto;
+    color: cyan;
+    padding: 30vh 2.5vw 0vh 2.5vw;
+  }
+  
+  h2{
+    font-family: 'Josefin Sans',san-serif;
+    font-weight:100;
+    font-size:7vw;
+    text-align:center;
+    color: cyan;
+    padding: 0vh 2.5vw 0vh 2.5vw;
+  }
+  
+  h3{
+    font-family: 'Josefin Sans',san-serif;
+    font-weight:300;
+    font-size:2vw;
+    text-align:center;
+    color: dimgray;
+    padding: 0vh 2.5vw 0vh 2.5vw;
+  }
+  
+  h4{
+    font-family: 'Josefin Sans',san-serif;
+    font-weight:400;
+    font-size:2vw;
+    text-align:center;
+    color: white;
+    padding: 0vh 2.5vw 0vh 2.5vw;
+  }
+  
+  button{
+    font-family: 'Josefin Sans',san-serif;
+    font-weight:400;
+    font-size:20px;
+  }
+  
+  #portfolio{
+    background-color: black;
+    margin-bottom: auto;
+  }
+  
+  #portfoliothumbs{
+    padding-bottom: 3vw;
+  }
+  
+  #testimonials{
+    margin-top:-4vw;
+    padding-left:1vw;
+    padding-right:1vw;
+  }
+  
