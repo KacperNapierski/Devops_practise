@@ -1,5 +1,1 @@
-IaaC/.terraform/providers/registry.terraform.io/telmate/proxmox/2.9.11/linux_amd64/terraform-provider-proxmox_v2.9.11
-IaaC/.terraform/providers/registry.terraform.io/telmate/proxmox/2.9.11/linux_amd64/README.md
-IaaC/.terraform/providers/registry.terraform.io/telmate/proxmox/2.9.11/linux_amd64/LICENSE
-IaaC/terraform.tfstate
 IaaC/credentials.auto.tfvars
