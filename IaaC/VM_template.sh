@@ -18,10 +18,10 @@ get_basic_vm_settings
 
 #---------Template creation-----------
 qm create $vm_id --name $vm_name --memory $vm_memory --cores $vm_core --net0 virtio,bridge=vmbr0
-qm importdisk $vm_id focal-server-cloudimg-amd64.img local
+qm importdisk $vm_id focal-server-cloudimg-amd64.img local-lvm
 qm set $vm_id --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-$vm_id-disk-0
-qm set $vm_id --boot c --bootdisk scsi0
 qm set $vm_id --ide2 local-lvm:cloudinit
+qm set $vm_id --boot c --bootdisk scsi0
 qm set $vm_id --serial0 socket --vga serial0
 qm set $vm_id --agent enabled=1
 qm template $vm_id
