@@ -23,6 +23,7 @@ resource "proxmox_vm_qemu" "worker_node" {
   }
 
   disk {
+    slot     = 0
     type     = "scsi"
     storage  = "local-lvm"
     size     = "20G"
