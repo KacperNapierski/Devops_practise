@@ -10,6 +10,7 @@ get_basic_vm_settings(){
 #---------Requirements------------
 rm focal-server-cloudimg-amd64.img
 wget https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
+sudo virt-customize -a focal-server-cloudimg-amd64.img --install qemu-guest-agent
 apt update -y
 apt install libguestfs-tools -y
 echo 'Requirements downloaded'

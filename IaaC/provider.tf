@@ -23,6 +23,29 @@ variable "proxmox_api_token_secret" {
   sensitive = true
 }
 
+variable "cloud_init_ciuser" {
+  type      = string
+  sensitive = true
+}
+
+variable "cloud_init_cipassword" {
+  type      = string
+  sensitive = true
+}
+
+variable "ssh_rsa_pub" {
+  type = string
+
+}
+
+variable "clone_name" {
+  type = string
+}
+
+variable "target_node_name" {
+  type = string
+}
+
 provider "proxmox" {
   pm_api_url          = var.proxmox_api_url
   pm_api_token_id     = var.proxmox_api_token_id
