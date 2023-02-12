@@ -1,0 +1,10 @@
+[master]
+192.168.0.150 #master-node
+
+[test_workers]
+192.168.0.151 #worker-node-1
+192.168.0.152 #worker-node-2
+
+[production]
+192.168.0.153 #production-node-1
+192.168.0.154 #production-node-2
