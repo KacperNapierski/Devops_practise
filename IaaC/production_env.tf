@@ -3,7 +3,7 @@ resource "proxmox_vm_qemu" "worker_node" {
   target_node = var.target_node_name
   clone       = var.clone_name
   count       = 2
-  name        = "worker-node-${count.index + 1}"
+  name        = "staging-${count.index + 1}"
   vmid        = "30${count.index + 1}"
   desc        = "Testing nodes for pipeline"
 
@@ -52,7 +52,7 @@ resource "proxmox_vm_qemu" "production_node" {
   target_node = var.target_node_name
   clone       = var.clone_name
   count       = 2
-  name        = "production-node-${count.index + 1}"
+  name        = "production-${count.index + 1}"
   vmid        = "30${count.index + 3}"
   desc        = "Production environment"
 
@@ -101,7 +101,7 @@ resource "proxmox_vm_qemu" "master_node" {
   target_node = var.target_node_name
   clone       = var.clone_name
   count       = 1
-  name        = "master-node-${count.index + 1}"
+  name        = "master-${count.index}"
   vmid        = "30${count.index}"
   desc        = "Production master node"
 

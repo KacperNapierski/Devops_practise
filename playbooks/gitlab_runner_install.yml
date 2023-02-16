@@ -1,0 +1,17 @@
+---
+- name: Docker cahce folder
+  ansible.builtin.file:
+    path: /home/weles/GitLab_Runner_img
+    state: directory
+
+- name: Pull Image from Registry
+  community.docker.docker_image:
+    name: gitlab/gitlab-runner:latest
+    source: pull
+    pull:
+      platform: amd64
+    state: present
+    build:
+      path: /
+
+- name: Define Conainer volume path

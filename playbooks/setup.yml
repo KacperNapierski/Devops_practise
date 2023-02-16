@@ -1,0 +1,28 @@
+- name: Prepare full production environment
+  hosts: all
+  become: true
+  tasks:
+    - name: Update packages installed
+      ansible.builtin.apt:
+        name: Update packages
+        update_cache: true
+
+    - name: Update
+      ansible.builtin.apt:
+        upgrade: true
+
+    - name: Install qemu-guest-agent
+      ansible.builtin.apt:
+        name: qemu-guest-agent
+        state: present
+
+    - name: Docker set up
+      ansible.builtin.import_tasks:
+        docker_install.yml
+
+    # [ ] Docker install validation
+    # [ ] Gitlab runner install
+    # [ ] Kubernates install
+    # [ ] Kubernates set up + helm?
+    # [ ] Prometheus install/ use gitlab Prometheus
+    # [ ] Grafana install + dashboard
