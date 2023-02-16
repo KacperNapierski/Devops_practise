@@ -12,6 +12,6 @@
       platform: amd64
     state: present
     build:
-      path: /
+      path: /home/weles/GitLab_Runner_img
 
 - name: Define Conainer volume path
