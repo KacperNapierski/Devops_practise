@@ -1,0 +1,6 @@
+---
+
+gitlab_runner_path: '/home/weles/GitLab_Runner_img'
+gitlab_runner_container_name: 'gitlab-runner'
+gitlab_runner_container_img: 'gitlab/gitlab-runner'
+gitlab_runner_container_tag: 'latest'
