@@ -1,1 +1,2 @@
 IaaC/credentials.auto.tfvars
+playbooks/vars.yml

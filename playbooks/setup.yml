@@ -22,8 +22,12 @@
       ansible.builtin.import_tasks:
         docker_install.yml
 
-    # [ ] Docker install validation
-    # [ ] Gitlab runner install
+    - name: Gitlab runner set up
+      ansible.builtin.import_tasks:
+        gitlab_runner_install.yml
+
+    # [x] Docker install validation
+    # [x] Gitlab runner install
     # [ ] Kubernates install
     # [ ] Kubernates set up + helm?
     # [ ] Prometheus install/ use gitlab Prometheus
