@@ -1,0 +1,63 @@
+--- # TODO only master
+
+  - name: Add the GitLab Runner package repository
+    shell: 
+      "curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash"
+
+  # - name: Install GitLab Runner package
+  #  apt:
+  #    name: gitlab-runner
+  #    state: latest
+  - name: Remove old docker container
+    docker_container:
+      name: gitlab-runner
+      state: absent
+
+  - name: Run Gitlab Runner in docker container
+    shell:
+      "docker run -d --name gitlab-runner --restart always \
+      -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+      -v /var/run/docker.sock:/var/run/docker.sock \
+      gitlab/gitlab-runner:latest"
+
+  - name: Unregister all previously used Gitlab Runners
+    shell: "docker run gitlab/gitlab-runner unregister --all-runners --url {{gitlab_url}} --token {{gitlab_registration_token}}"
+
+  - name: Add gitlab-runner user to docker group
+    user:
+      name: gitlab-runner
+      groups: docker
+      append: yes
+
+  - name: Register Gitlab-Runners using docker executor for Docker-in-Docker
+    shell: 
+      "docker run gitlab/gitlab-runner register \
+      --non-interactive \
+      --url '{{gitlab_url}}' \
+      --registration-token '{{gitlab_registration_token}}' \
+      --executor docker \
+      --docker-image latest \
+      --docker-privileged \
+      --description 'docker-runner'\
+      --tag-list 'docker, CICD' \
+      --run-untagged= 'true' \
+      --locked= 'false' \
+      --access-level= 'not_protected'"
+
+  - name: set concurrent number of runners in gitlab-runner config
+    ini_file:
+      path: /etc/gitlab-runner/config.toml
+      section: 
+      option: concurrent
+      value: "{{ gitlab_runner_count }}"
+
+  - name: Retrieve all registered Gitlab Runners
+    shell: "docker run gitlab/gitlab-runner list"
+    register: runner_result
+
+  - name: Show all registered Gitlab Runners
+    debug:
+      msg:
+        - "{{runner_result.stderr_lines}}"
+
+# FIXME verify sudo docker run gitlab/gitlab-runner health-check

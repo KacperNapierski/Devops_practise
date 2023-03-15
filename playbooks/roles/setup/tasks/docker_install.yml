@@ -3,40 +3,39 @@
 #
 #  tasks:
 ---
+
 - name: Install docker dependencies
-  ansible.builtin.apt:
-    pkg:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - software-properties-common
-      - python3-pip
-      - virtualenv
-      - gnupg-agent
+  apt:
+    name: [
+      'apt-transport-https',
+      'ca-certificates',
+      'curl',
+      'software-properties-common',
+      'python3-pip',
+      'virtualenv',
+      'gnupg-agent',
+    ]
     state: present
 - name: Update_cache
-  ansible.builtin.apt:
+  apt:
     update_cache: true
 - name: GPG key docker
-  ansible.builtin.apt_key:
+  apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
 - name: Add ubuntu to repository
-  ansible.builtin.apt_repository:
+  apt_repository:
     repo: deb https://download.docker.com/linux/ubuntu focal stable
     state: present
 - name: Install docker
-  ansible.builtin.apt:
+  apt:
     pkg:
       - docker-ce
       - docker-ce-cli
       - containerd.io
     state: present
-- name: Update_cache
-  ansible.builtin.apt:
-    update_cache: true
 - name: Check is docker active
-  ansible.builtin.service:
+  service:
     name: docker
     enabled: true
     state: started

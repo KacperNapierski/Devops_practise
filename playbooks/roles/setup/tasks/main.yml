@@ -1,0 +1,28 @@
+---
+
+- name: Update packages installed
+  apt:
+    name: "*"
+    state: latest
+
+- name: Update
+  apt:
+    upgrade: true
+    update_cache: true
+
+- name: Install qemu-guest-agent
+  apt:
+    name: qemu-guest-agent
+    state: present
+
+- include_tasks: docker_install.yml
+
+- include_tasks: gitlab_runner_install.yml
+
+
+    # [x] Docker install validation
+    # [x] Gitlab runner install
+    # [ ] Kubernates install
+    # [ ] Kubernates set up + helm?
+    # [ ] Prometheus install/ use gitlab Prometheus
+    # [ ] Grafana install + dashboard

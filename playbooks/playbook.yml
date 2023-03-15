@@ -1,0 +1,9 @@
+---
+
+- name: Setup
+  hosts: staging
+  remote_user: weles
+  become: true
+  roles:
+    - setup
+
