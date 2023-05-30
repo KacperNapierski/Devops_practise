@@ -15,13 +15,14 @@
 
   - name: Run Gitlab Runner in docker container
     shell:
-      "docker run -d --name gitlab-runner --restart always \
-      -v /srv/gitlab-runner/config:/etc/gitlab-runner \
-      -v /var/run/docker.sock:/var/run/docker.sock \
-      gitlab/gitlab-runner:latest"
+      sudo docker run -d --name gitlab-runner --restart always \
+        -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        gitlab/gitlab-runner:latest
+
 
   - name: Unregister all previously used Gitlab Runners
-    shell: "docker run gitlab/gitlab-runner unregister --all-runners --url {{gitlab_url}} --token {{gitlab_registration_token}}"
+    shell: sudo docker run gitlab/gitlab-runner unregister --all-runners --url {{gitlab_url}} --token {{gitlab_registration_token}}
 
   - name: Add gitlab-runner user to docker group
     user:
@@ -30,26 +31,48 @@
       append: yes
 
   - name: Register Gitlab-Runners using docker executor for Docker-in-Docker
-    shell: 
-      "docker run gitlab/gitlab-runner register \
-      --non-interactive \
-      --url '{{gitlab_url}}' \
-      --registration-token '{{gitlab_registration_token}}' \
-      --executor docker \
-      --docker-image latest \
-      --docker-privileged \
-      --description 'docker-runner'\
-      --tag-list 'docker, CICD' \
-      --run-untagged= 'true' \
-      --locked= 'false' \
-      --access-level= 'not_protected'"
+    shell:
+      sudo docker run --rm -v /srv/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register \
+        --non-interactive \
+        --executor "docker" \
+        --docker-image alpine:latest \
+        --url "{{gitlab_url}}" \
+        --registration-token "{{gitlab_registration_token}}" \
+        --description "docker-runner" \
+        --maintenance-note "Free-form maintainer notes about this runner" \
+        --tag-list "docker,aws" \
+        --run-untagged="true" \
+        --locked="false" \
+        --access-level="not_protected"
+
+
+  - name: Gitlab runner verify
+    shell:
+      sudo docker run gitlab/gitlab-runner verify
+
+#    shell: 
+#      "docker run gitlab/gitlab-runner register \
+#      --non-interactive \
+#      --url '{{gitlab_url}}' \
+#      --registration-token '{{gitlab_registration_token}}' \
+#      --executor docker \
+#      --docker-image latest \
+#      --docker-privileged \
+#      --description 'docker-runner'\
+#      --tag-list 'docker, CICD' \
+#      --run-untagged= 'true' \
+#      --locked= 'false' \
+#      --access-level= 'not_protected'"
 
   - name: set concurrent number of runners in gitlab-runner config
     ini_file:
       path: /etc/gitlab-runner/config.toml
       section: 
       option: concurrent
-      value: "{{ gitlab_runner_count }}"
+      value: "{{gitlab_runner_count}}"
+
+#  - name: Rm old containers
+#    shell: sudo docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs sudo docker rm
 
   - name: Retrieve all registered Gitlab Runners
     shell: "docker run gitlab/gitlab-runner list"

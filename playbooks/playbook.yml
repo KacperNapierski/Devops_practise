@@ -1,7 +1,7 @@
 ---
 
 - name: Setup
-  hosts: staging
+  hosts: staging, production
   remote_user: weles
   become: true
   roles:

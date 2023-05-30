@@ -1,2 +1,8 @@
 IaaC/credentials.auto.tfvars
-playbooks/vars.yml
+playbooks/roles/setup/vars
+venv
+IaaC/.terraform
+IaaC/.terraform.lock.hcl
+IaaC/terraform.tfstate.backup
+IaaC/terraform.tfstate
+.vscode
