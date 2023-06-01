@@ -1,5 +1,6 @@
 IaaC/credentials.auto.tfvars
 playbooks/roles/setup/vars
+playbooks/roles/database_setup/vars
 venv
 IaaC/.terraform
 IaaC/.terraform.lock.hcl

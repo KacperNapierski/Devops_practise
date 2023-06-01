@@ -1,0 +1,41 @@
+---
+
+- name: Create app database
+  postgresql_db:
+    state: present
+    name: "{{db_name}}"
+  become: true
+  become_user: postgres
+
+- name: Create user
+  postgresql_user:
+    state: present
+    name: "{{db_user}}"
+    password: "{{db_password}}"
+  become: true
+  become_user: postgres
+
+- name: Grant user acces to db_name
+  postgresql_privs:
+    type: database
+    database: "{{db_name}}"
+    roles: "{{db_user}}"
+    grant_option: false
+    privs: all
+  become: true
+  become_user: postgres
+
+- name: md5 connection
+  postgresql_pg_hba:
+    dest: "~/data/pg_hba.conf"
+    contype: host
+    databases: all
+    method: md5
+    user: "{{db_user}}"
+    create: true
+  become: true
+  become_user: postgres
+
+- name: restart postgresql
+  service: postgresql
+  state: restart

@@ -7,3 +7,9 @@
   roles:
     - setup
 
+- name: Database
+  hosts: master
+  remote_user: weles
+  become: true
+  roles:
+    - database_setup

@@ -1,0 +1,36 @@
+---
+
+- name: Packages install
+  apt: 
+    pkg:
+      - postgresql
+      - postgresql-server
+    state: present
+
+- name: Pip install
+  pip:
+    name:
+      - psycopg2-binary
+    state: present
+
+- name: Verify if postgresql is initialized
+  ansible.builtin.stat:
+    path: "/var/lib/pgsql/data/pg_hba.conf"
+  register: postgres_data
+
+- name: Postgrade initialize
+  shell: postgresql-setup initdb
+  when: not postgres_data.stat.exist
+
+- name: Start and enable
+  service:
+    name:
+      - postgresql
+    state: started
+    enabled: true
+
+- name: restart postgresql
+  handlers:
+    - name: restart postgresql
+      service: postgresql
+      state: restart
