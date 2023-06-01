@@ -1,5 +1,10 @@
 ---
 
+- name: get acl
+  apt:
+    name: acl
+    state: present
+
 - name: Create app database
   postgresql_db:
     state: present
@@ -24,18 +29,19 @@
     privs: all
   become: true
   become_user: postgres
-
+# FIXME
 - name: md5 connection
   postgresql_pg_hba:
     dest: "~/data/pg_hba.conf"
     contype: host
     databases: all
     method: md5
-    user: "{{db_user}}"
+    users: "{{db_user}}"
     create: true
   become: true
   become_user: postgres
 
 - name: restart postgresql
-  service: postgresql
-  state: restart
+  service: 
+    name: postgresql
+    state: restarted

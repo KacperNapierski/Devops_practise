@@ -4,7 +4,7 @@
   apt: 
     pkg:
       - postgresql
-      - postgresql-server
+      - python3-pip
     state: present
 
 - name: Pip install
@@ -18,19 +18,18 @@
     path: "/var/lib/pgsql/data/pg_hba.conf"
   register: postgres_data
 
-- name: Postgrade initialize
-  shell: postgresql-setup initdb
-  when: not postgres_data.stat.exist
+#- name: Postgrade initialize
+#  shell: postgresql-setup initdb
+#  when: not postgres_data.stat.exist
+#  become: true
 
 - name: Start and enable
   service:
-    name:
-      - postgresql
+    name: postgresql
     state: started
     enabled: true
 
-- name: restart postgresql
-  handlers:
-    - name: restart postgresql
-      service: postgresql
-      state: restart
+#- name: restart postgresql
+#  service: 
+#    name: postgresql
+#    state: restarted

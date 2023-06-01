@@ -6,6 +6,8 @@
   become: true
   roles:
     - setup
+  tags:
+    - setup
 
 - name: Database
   hosts: master
@@ -13,3 +15,5 @@
   become: true
   roles:
     - database_setup
+  tags:
+    - db_setup
